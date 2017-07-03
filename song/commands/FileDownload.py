@@ -18,10 +18,10 @@ class FileDownload:
 				print e
 				quit()
 		except requests.exceptions.RequestException as e:
-			print e	
+			print e
 			quit()
 
-		return response.content	
+		return response.content
 
 
 	def file_download_using_requests(self,url):
@@ -34,7 +34,7 @@ class FileDownload:
 		#print 'Downloading file %s '%file_name
 		#print 'Downloading from %s'%url
 
-		
+
 
 		try:
 			r=requests.get(url,stream=True,timeout=200)
@@ -43,10 +43,10 @@ class FileDownload:
 				response=requests.get(url,stream=True,verify=False,timeout=200)
 			except requests.exceptions.RequestException as e:
 				print e
-				quit()		
+				quit()
 		except requests.exceptions.RequestException as e:
 				print e
-				quit()	
+				quit()
 		chunk_size = 1024
 		total_size = int(r.headers['Content-Length'])
 		total_chunks = total_size/chunk_size
@@ -54,12 +54,12 @@ class FileDownload:
 		file_iterable = r.iter_content(chunk_size = chunk_size)
 		tqdm_iter = tqdm(iterable = file_iterable,total = total_chunks,unit = 'KB',
 			leave = False
-			)		
+			)
 		with open(file_name,'wb') as f:
 			for data in tqdm_iter:
 				f.write(data)
 
-				
+
 		#total_size=float(r.headers['Content-Length'])/(1024*1024)
 		'''print 'Total size of file to be downloaded %.2f MB '%total_size
 		total_downloaded_size=0.0
@@ -81,7 +81,7 @@ class FileDownload:
 		command='wget -c --read-timeout=50 --tries=3 -q --show-progress --no-check-certificate '
 		url='"'+url+'"'
 		command=command+url
-		os.system(command)			
+		os.system(command)
 
 	def file_download_cross_platform(self,url):
 		file_name=url.split('/')[-1]
@@ -96,11 +96,9 @@ class FileDownload:
 			subprocess.call(['wget','-c','--read-timeout=50','--tries=3','-q','--show-progress','--no-check-certificate',url])
 		except:
 			#print 'file download using requests'
-			self.file_download_using_requests(url);	
+			self.file_download_using_requests(url);
 
 
 	def file_download_using_youtube_dl(self,url):
 		#command = 'youtube-dl -cit --embed-thumbnail --no-warnings --extract-audio --audio-quality 0 --audio-format mp3 '
-		subprocess.call(['youtube-dl','-cit','--embed-thumbnail','--no-warnings','--extract-audio','--audio-quality', '0','--audio-format', 'mp3',url])
-						
-			
+		subprocess.call(['youtube-dl','-cit','--no-warnings','--extract-audio','--audio-quality', '0','--audio-format', 'vorbis',url])

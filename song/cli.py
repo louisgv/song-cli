@@ -2,6 +2,7 @@
 song
 
 Usage:
+  song TEXT...
   song -d [--download-all] TEXT...
   song -h | --help
   song --version
